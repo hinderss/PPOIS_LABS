@@ -1,40 +1,70 @@
 using Microsoft.Data.Sqlite;
 using Minimarket;
 
-
 namespace MinimarketTests
 {
     public class BaseDiscountCardsTest
     {
-        protected const string ConnectionString = "Data Source=D:\\BSUIR\\PPOIS\\minimarket_cs\\MinimarketTests\\bin\\Debug\\net6.0\\sample.db;";
+        protected const string ConnectionString = "Data Source=D:\\BSUIR\\PPOIS\\minimarket_cs\\minimarket_cs\\bin\\Debug\\net6.0\\test.db;";
         protected const string TableName = "Products";
     }
 
 
     [TestClass]
-    public class DiscountCardsManagerTests : BaseDiscountCardsTest
+    public class AddToDB : BaseDiscountCardsTest
     {
-        private new const string TableName = "DiscountCards";
+        private PaymentData payment = new PaymentData(
+                "ООО \"Example\"",
+                "BY30UNBS31581568200000000784",
+                "UNBSBY2X",
+                "197845668",
+                "Оплата в минимаркете",
+                "OTHR",
+                "208956");
 
-        [TestMethod]
-        public void TestCreateTable()
+
+        [TestInitialize]
+        public void Initialize()
         {
-            var manager = new DiscountCardsManager(ConnectionString, TableName);
-
+            MarketFloor marketFloor = new MarketFloor(ConnectionString, TableName);
             using (var connection = new SqliteConnection(ConnectionString))
             {
                 connection.Open();
+                var command = new SqliteCommand($"DELETE FROM {TableName}", connection);
+                command.ExecuteNonQuery();
+            }
+        }
 
-                var command = new SqliteCommand($"SELECT name FROM sqlite_master WHERE type='table' AND name='{TableName}'", connection);
+        [TestMethod]
+        public void TestAddToDB()
+        {
+            MarketFloor marketFloor = new MarketFloor(ConnectionString, TableName);
 
-                using (var reader = command.ExecuteReader())
+            CustomersCards customersCards = new CustomersCards(ConnectionString, "Cards");
+
+            var cashier = new Cashier(marketFloor, payment, customersCards);
+            var expected = new BarcodeProduct("Barcode Product 1", 10.0m, "Description 1", "487878787887875487847");
+            marketFloor.AddProductWithQuantity(expected, 10);
+
+            string selectQuery = $"SELECT * FROM {TableName} WHERE Barcode = @Value";
+
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                using (SqliteCommand command = new SqliteCommand(selectQuery, connection))
                 {
-                    Assert.IsTrue(reader.Read(), "Таблица не была создана.");
+                    command.Parameters.AddWithValue("@Value", expected.Barcode);
+
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        Assert.IsTrue(reader.Read());
+
+                    }
                 }
             }
         }
     }
-    
+
     [TestClass]
     public class DiscountCardsManagerTests1: BaseDiscountCardsTest
     {
@@ -43,7 +73,7 @@ namespace MinimarketTests
         [TestMethod]
         public void TestCreateTable()
         {
-            var manager = new DiscountCardsManager(ConnectionString, TableName);
+            var manager = new DiscountCardsDBManager(ConnectionString, TableName);
 
             using (var connection = new SqliteConnection(ConnectionString))
             {
@@ -67,8 +97,8 @@ namespace MinimarketTests
         [TestMethod]
         public void DeleteTableCards()
         {
-            var manager = new DiscountCardsManager(ConnectionString, TableName);
-            manager.DeleteTable();
+            var manager = new DiscountCardsDBManager(ConnectionString, TableName);
+            //manager.DeleteTable();
 
             using (var connection = new SqliteConnection(ConnectionString))
             {
@@ -129,13 +159,12 @@ namespace MinimarketTests
     }
 
     [TestClass]
-    public class DeleteTableProductsTest: BaseDiscountCardsTest{
+    public class TableDoesNotExist: BaseDiscountCardsTest{
 
         [TestMethod]
-        public void DeleteTableProducts()
+        public void TestTableDoesNotExist()
         {
             var manager = new MarketFloorDBManager(ConnectionString, TableName);
-            manager.DeleteTable();
 
             using (var connection = new SqliteConnection(ConnectionString))
             {
@@ -394,7 +423,7 @@ namespace MinimarketTests
         [TestMethod]
         public void TestCashier()
         {
-            var discountCardsManager = new DiscountCardsManager(ConnectionString, TableNameCards);
+            var discountCardsManager = new DiscountCardsDBManager(ConnectionString, TableNameCards);
             var card = new DiscountCard("00000000000000000", "Example Example", "000000000000", DateTime.Parse("2023-09-25 22:10:07.6113453"));
             discountCardsManager.AddItem(card);
 
@@ -452,7 +481,7 @@ namespace MinimarketTests
         [TestMethod]
         public void TestCashier()
         {
-            var discountCardsManager = new DiscountCardsManager(ConnectionString, TableNameCards);
+            var discountCardsManager = new DiscountCardsDBManager(ConnectionString, TableNameCards);
             var card = new DiscountCard("00000000000000000", "Example Example", "000000000000", DateTime.Parse("2021-09-25 22:10:07.6113453"));
             discountCardsManager.AddItem(card);
 
@@ -511,7 +540,7 @@ namespace MinimarketTests
         [TestMethod]
         public void TestCashier()
         {
-            var discountCardsManager = new DiscountCardsManager(ConnectionString, TableNameCards);
+            var discountCardsManager = new DiscountCardsDBManager(ConnectionString, TableNameCards);
             var card = new DiscountCard("00000000000000000", "Example Example", "000000000000", DateTime.Parse("2014-09-25 22:10:07.6113453"));
             discountCardsManager.AddItem(card);
 
@@ -561,7 +590,7 @@ namespace MinimarketTests
         [TestMethod]
         public void TestCashier()
         {
-            var discountCardsManager = new DiscountCardsManager(ConnectionString, TableNameCards);
+            var discountCardsManager = new DiscountCardsDBManager(ConnectionString, TableNameCards);
             var card = new DiscountCard("00000000000000000", "Example Example", "000000000000");
             discountCardsManager.AddItem(card);
 
@@ -784,7 +813,7 @@ namespace MinimarketTests
         [TestMethod]
         public void TestDeleteItemCard()
         {
-            var discountCardDBManager = new DiscountCardsManager(ConnectionString, TableName);
+            var discountCardDBManager = new DiscountCardsDBManager(ConnectionString, TableName);
 
 
             var expected = new DiscountCard("00000000000000000", "Example Example", "000000000000");

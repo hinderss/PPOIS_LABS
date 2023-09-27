@@ -2,123 +2,6 @@
 
 namespace Minimarket
 {
-    public class DiscountCardsManager : IDatabaseManager<DiscountCard>
-    {
-        private string _connectionString;
-        private string _tableName;
-
-        public DiscountCardsManager(string connectionString, string tableName)
-        {
-            _connectionString = connectionString;
-            _tableName = tableName;
-            CreateNewTable(tableName);
-        }
-
-        public void CreateNewTable(string tableName)
-        {
-            _tableName = tableName;
-            using (SqliteConnection connection = new SqliteConnection(_connectionString))
-            {
-                connection.Open();
-
-                string createTableQuery = $"CREATE TABLE IF NOT EXISTS {_tableName} (" +
-                         "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                         "Number TEXT NOT NULL," +
-                         "CardHolderName TEXT NOT NULL," +
-                         "CardHolderPhone TEXT NOT NULL," +
-                         "CreationDate DATE NOT NULL)";
-
-                using (SqliteCommand command = new SqliteCommand(createTableQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public void DeleteTable()
-        {
-            using (SqliteConnection connection = new SqliteConnection(_connectionString))
-            {
-                connection.Open();
-
-                string deleteTableQuery = $"DROP TABLE IF EXISTS {_tableName}";
-
-                using (SqliteCommand command = new SqliteCommand(deleteTableQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public void AddItem(DiscountCard card)
-        {
-            using (SqliteConnection connection = new SqliteConnection(_connectionString))
-            {
-                connection.Open();
-
-                string insertQuery = $"INSERT INTO {_tableName} (Number, CardHolderName, CardHolderPhone, CreationDate) " +
-                                    "VALUES (@Number, @CardHolderName, @CardHolderPhone, @CreationDate)";
-
-                using (SqliteCommand command = new SqliteCommand(insertQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@Number", card.Number);
-                    command.Parameters.AddWithValue("@CardHolderName", card.CardHolderName);
-                    command.Parameters.AddWithValue("@CardHolderPhone", card.CardHolderPhone);
-                    command.Parameters.AddWithValue("@CreationDate", card.CreationDate);
-
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public void DeleteItem(DiscountCard card)
-        {
-            using (SqliteConnection connection = new SqliteConnection(_connectionString))
-            {
-                connection.Open();
-
-                string deleteQuery = $"DELETE FROM {_tableName} WHERE Number = @Number";
-
-                using (SqliteCommand command = new SqliteCommand(deleteQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@Number", card.Number);
-
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public DiscountCard? Get(string field, string value)
-        {
-            using (SqliteConnection connection = new SqliteConnection(_connectionString))
-            {
-                connection.Open();
-
-                string selectQuery = $"SELECT * FROM {_tableName} WHERE {field} = @Value";
-
-                using (SqliteCommand command = new SqliteCommand(selectQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@Value", value);
-
-                    using (SqliteDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            string number = reader["Number"].ToString();
-                            string cardHolderName = reader["CardHolderName"].ToString();
-                            string cardHolderPhone = reader["CardHolderPhone"].ToString();
-                            DateTime dateTime = DateTime.Parse(reader["CreationDate"].ToString());
-
-                            return new DiscountCard(number, cardHolderName, cardHolderPhone, dateTime);
-                        }
-                    }
-                }
-            }
-
-            return null;
-        }
-    }
-
     public class MarketFloorDBManager : IDatabaseManager<Product>
     {
         private string _connectionString;
@@ -128,44 +11,6 @@ namespace Minimarket
         {
             _connectionString = connectionString;
             _tableName = tableName;
-            CreateNewTable(tableName);
-        }
-
-        public void CreateNewTable(string tableName)
-        {
-            _tableName = tableName;
-            using (SqliteConnection connection = new SqliteConnection(_connectionString))
-            {
-                connection.Open();
-
-                string createTableQuery = $"CREATE TABLE IF NOT EXISTS {tableName} (" +
-                         "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                         "Name TEXT NOT NULL," +
-                         "Price DECIMAL NOT NULL," +
-                         "Description TEXT," +
-                         "Barcode TEXT," +
-                         "Quantity INTEGER NOT NULL DEFAULT 0)";
-
-                using (SqliteCommand command = new SqliteCommand(createTableQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public void DeleteTable()
-        {
-            using (SqliteConnection connection = new SqliteConnection(_connectionString))
-            {
-                connection.Open();
-
-                string deleteTableQuery = $"DROP TABLE IF EXISTS {_tableName}";
-
-                using (SqliteCommand command = new SqliteCommand(deleteTableQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-            }
         }
 
         public void AddItem(Product item)
@@ -372,8 +217,6 @@ namespace Minimarket
 
                     updateCommand.ExecuteNonQuery();
                 }
-
-                // Вернуть объект Product
                 return Get(field, value);
             }
         }
