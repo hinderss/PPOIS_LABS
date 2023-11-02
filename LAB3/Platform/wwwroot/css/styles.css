@@ -1,0 +1,340 @@
+/* Общие стили */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Стили для хедера */
+header {
+    
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+}
+
+embed {
+    width: 100%; 
+    height: 270px;
+    padding-top: 2%;
+}
+
+.header-logo img {
+    max-width: 100px;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.header-nav ul {
+    color: #000000;
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0px;
+}
+
+.header-auth a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+    border: 2px solid #000; /* Ширина линии и цвет границы */
+    padding: 5px 10px; /* Отступы вокруг текста внутри кнопки */
+    border-radius: 5px; /* Закругление углов, чтобы сделать прямоугольный вид */
+    transition: background-color 0.1s; /* Add a smooth transition */
+}
+
+.header-auth a:hover{
+    background-color: #006eff;
+}
+
+.header-auth h1{
+    font-size: 16px;
+    color: black;
+    margin-top: 5px;
+}
+
+.header-auth button {
+    text-decoration: none;
+    color: #000000;
+    background-color: white;
+    font-weight: bold;
+    border: 2px solid #000; /* Ширина линии и цвет границы */
+    padding: 5px 10px; /* Отступы вокруг текста внутри кнопки */
+    border-radius: 5px; /* Закругление углов, чтобы сделать прямоугольный вид */
+    transition: background-color 0.1s; /* Add a smooth transition */
+}
+
+.header-auth button:hover{
+    background-color: #ff004c;
+    cursor: pointer; /* Change cursor to a pointing hand */
+}
+
+.start_button {
+    text-decoration: none;
+    background-color: #006eff;
+    color: #fff;
+    font-weight: bold;
+    padding: 11px 50px; /* Отступы вокруг текста внутри кнопки */
+    border-radius: 5px; /* Закругление углов, чтобы сделать прямоугольный вид */
+}
+
+
+.header-auth ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.header-nav a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+/* Стили для блока с контактами, подпиской и социальными сетями */
+.contact-info {
+    background-color: #f0f0f0;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.contact-block,
+.subscribe,
+.social-media {
+    flex: 1;
+    padding: 10px;
+}
+
+.contact-block ul {
+    list-style: none;
+}
+
+.contact-block a {
+    text-decoration: none;
+    color: #333;
+}
+
+.subscribe input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.subscribe button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.social-media ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+}
+
+.social-media a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+
+    align-items: center; /* Вертикальное выравнивание по центру */
+}
+
+.container .containerheader{
+    font-size: 1.5rem;
+}
+
+
+.text {
+    text-align: left;
+    margin-right: 20px; /* Расстояние между текстом и изображением */
+}
+
+.course {
+    width: 28%; /* Ширина блока курса */
+    height: inherit;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px 10px 10px 15px;
+    display: inline-block;
+    vertical-align: top;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: left;
+    background-color: #fff;
+    transition: transform 0.1s ease-in-out; /* Добавляем плавную анимацию */
+}
+
+.course h2 {
+    font-size: 25px;
+}
+
+.course p {
+    display: inline-block;
+    justify-self: left;
+    margin: 15px 0 5px 0;
+    font-size: 15px;
+}
+
+.course-description {
+    display: inline;
+    color: gray;
+}
+
+.course-duration {
+    display: inline;
+}
+
+.course-price {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.course-link {
+    text-decoration:none;
+    width: 0%;
+    height: 0%;
+    color: inherit;
+}
+
+.course:hover {
+    transform: scale(1.05); /* Увеличение блока при наведении */
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3); /* Увеличение тени при наведении */
+}
+
+.centered-container {
+    /*width: 70vw;*/
+    margin-top: 50px;
+    min-height: 600px;
+}
+
+.centered-container h1{
+    margin-top: 100px;
+}
+
+.largeletters {
+    font-size: 80px;
+    text-align: left;
+    margin-left: 5%;
+}
+
+/* Стилизация левого блока "Чему вы научитесь" */
+.left-block {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1; /* Расширяем левый блок, чтобы он занимал доступное пространство */
+    margin-right: 20px;
+    min-width: 70%;
+}
+
+.left-block h2 {
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 24px; /* Размер заголовка */
+    margin-bottom: 10px; /* Отступ снизу */
+}
+
+.left-block ul {
+    list-style-type: disc; /* Устанавливаем маркеры в виде кружков */
+}
+
+.left-block li {
+    margin: 10px 0px 10px 0px;
+}
+
+/* Стилизация правого блока "Стоимость курса" */
+.right-block {
+    min-height: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1; /* Расширяем правый блок, чтобы он занимал доступное пространство */
+    text-align: center; /* Выравниваем содержимое по центру */
+    margin-left: 20px;
+}
+
+.right-block h2 {
+    font-size: 24px; /* Размер заголовка */
+    margin-bottom: 10px; /* Отступ снизу */
+}
+
+.right-block p {
+    font-size: 18px; /* Размер текста */
+}
+
+.buy-button {
+    background-color: #007bff; /* Цвет фона кнопки */
+    color: #fff; /* Цвет текста кнопки */
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    border: none; /* Убираем границу кнопки */
+    cursor: pointer; /* Изменяем курсор при наведении на кнопку */
+    border-radius: 5px; /* Закругляем углы кнопки */
+    margin-bottom: 20px;
+}
+
+.buy-button:hover {
+    background-color: #0056b3; /* Цвет фона кнопки при наведении */
+}
+
+#cabinetcourses .course{
+    width: 70%;
+}
+
+.videoblock {
+    margin: 50px;
+}
+
+.videoblock h2 {
+    margin: 20px 0px;
+}
+
+.video {
+    height: 500px;
+}
+
+.videoitem {
+    color: #000;
+    text-decoration: none;
+}
+
+.videoitem div {
+    margin: 10px;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.videoitem div:hover {
+    background-color: #ccc;
+}
+
+
+/* Медиазапросы для адаптивного дизайна */
+@media (max-width: 768px) {
+    .header-nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .header-auth ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+}

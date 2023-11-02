@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX Page</title>
+</head>
+<body>
+    <h1>Содержимое страницы</h1>
+    <p id="content">Здесь будет результат AJAX запроса.</p>
+
+    <button id="ajaxButton">Выполнить AJAX запрос</button>
+
+    <script>
+        // Функция для выполнения AJAX запроса
+        function makeAjaxRequest() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/ajaxendpoint", true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("content").textContent = response.message;
+                }
+            };
+
+            xhr.send();
+        }
+
+        // Добавление обработчика события на кнопку
+        document.getElementById("ajaxButton").addEventListener("click", makeAjaxRequest);
+    </script>
+</body>
+</html>

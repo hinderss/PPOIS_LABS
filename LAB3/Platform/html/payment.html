@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  margin: 0;
+  overflow-y: scroll;
+  font-family: 'Roboto', sans-serif;
+}
+    </style>
+</head>
+<body>
+    <div id=app></div>
+    <script>
+        var Options = {
+  options: {
+    methods: ["card"],
+    cardIcons: ["mastercard", "visa", "diners-club", "american-express"],
+    fields: false,
+    title: "my_title",
+    link: "https://shop.com",
+    fullScreen: true,
+    button: true,
+    locales: ["en"],
+    email: false,
+    tooltip: true,
+    fee: true
+  },
+  params: {
+    merchant_id: 1396424,
+    required_rectoken: "y",
+    currency: "USD",
+    amount: 500,
+    order_desc: "my_order_desc",
+    email: "",
+    lang: "en"
+  },
+  messages: {
+    ru: {
+      card_number: "Номер карты",
+      my_title: "Назначение платежа",
+      my_order_desc: "Тестовый платеж",
+      pay: "Оплатить"
+    },
+    en: {
+      card_number: "Card number",
+      my_title: "Order description",
+      my_order_desc: "Test order",
+      pay: "Pay now"
+    }
+  }
+};
+
+var app = fondy("#app", Options)
+  .$on("success", function(model) {
+    console.log("success event handled");
+
+    var order_status = model.attr("order.order_data.order_status");
+
+    if (order_status == "approved") {
+      console.log("Order is approved. Do somethng on approve...");
+    }
+  })
+  .$on("error", function(model) {
+    console.log("error event handled");
+    var response_code = model.attr("error.code");
+    var response_description = model.attr("error.message");
+    console.log(
+        "Order is declined: " +
+          response_code +
+          ", description: " +
+          response_description
+      );
+  });
+    </script>
+</body>
+</html>

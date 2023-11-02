@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваша страница</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <div style="width: 70%; margin: 0 auto;">
+    <header>
+        <div class="header-logo">
+            <nav class="header-nav">
+                <ul>
+                    <li>
+                        <a href="/">
+                            <img src="png/logo.png" alt="Логотип" style="max-height: 50px; margin-top: -15px;"></li>
+                        </a>
+                        <li><a style="margin-top: 15px;" href="/listcourses">Все курсы</a></li>
+                    <li><a style="margin-top: 15px;" href="/about">О нас</a></li>
+                </ul>
+            </nav>
+        </div>
+        <nav class="header-auth">
+            <ul id="authLinks">
+                <li>
+                    <h1>Добро пожаловать, </h1>
+                </li>
+                <li>
+                    <h1 id="UserName"></h1>
+                </li>
+                <li>
+                    <form action="/logout" method="post">
+                        <button type="submit">Выйти</button>
+                    </form>
+                </li>
+                <!-- Здесь по умолчанию ссылки на вход и регистрацию -->
+            </ul>
+        </nav>
+    </header>
+
+    <h1 class="largeletters">Ваши курсы</h1>
+    <p style="font-size: 20px; text-align: left; margin-left: 6%;">Выберите курс</p>
+
+    
+    <div id="cabinetcourses" style="min-height: 600px;" class="centered-container">
+        
+    </div>
+
+
+    <br><br><br><br>
+
+    </div><embed scrolling="no" src="/html/bottom_section.html">
+
+
+    <script src="js/FormCabinetPage.js"></script>
+</body>
+</html>
