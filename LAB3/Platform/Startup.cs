@@ -127,7 +127,7 @@ public class Startup
                 var form = context.Request.Form;
 
                 if (!form.ContainsKey("email") || !form.ContainsKey("password"))
-                    return Results.BadRequest("Email �/��� ������ �� �����������");
+                    return Results.BadRequest("Email incorrect");
 
                 string email = form["email"];
                 string password = form["password"];
